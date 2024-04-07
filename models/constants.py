@@ -1,0 +1,2 @@
+DATE_TIME_FORMAT="%Y-%m-%d %H:%M:%S"
+DATE_TIME_NEEDED_FORMAT="%Y-%m-%d %H:%M"
