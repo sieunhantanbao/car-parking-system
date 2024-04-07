@@ -4,7 +4,7 @@ from models.constants import DATE_TIME_FORMAT, DATE_TIME_NEEDED_FORMAT
 from objects.car_parking import CarParking
 from objects.parking_history import ParkingHistory
 from objects.payment_balance import PaymentBalance
-from ultils.colors import RED, RESET, GREEN
+from ultils.colors import RED, RESET, GREEN, YELLOW
 from services import parking_service as _parking_service
 
 def handle_parking() -> None:
@@ -22,7 +22,7 @@ def handle_parking() -> None:
                 if exist_car_parking:
                     print(RED + "Invalid parking. Your car has already parked" + RESET)
                     break
-                car_parking = CarParking(arrival_time, car_identity, frequent_parking_number)
+                car_parking = CarParking(f"{arrival_time}:00", car_identity, frequent_parking_number)
                 if car_parking and len(car_parking.errors) > 0:
                     for error in car_parking.errors:
                         print(RED + error + RESET)
@@ -51,11 +51,17 @@ def handle_pickup() -> None:
                 # Check car_parking existence
                 parked_car = _parking_service.get_car_parking(car_identity)
                 if not parked_car:
-                    print(RED + "Invalid pickup. Your car is not in parking lot" + RESET)
+                    print(RED + "Invalid car identity or your car is not in parking lot." + RESET)
                     continue
                 # Calculate the parking fee
-                #leaving_time = datetime.now()
-                leaving_time = datetime(2023, 11, 12, 19, 30)
+                leaving_time = datetime.now()
+                temp_leaving_time = input("> Leaving time - example 2023-06-18 18:30 - (optional). Blank or invalid input to use current datetime: ")
+                try:
+                    temp_leaving_time = datetime.strptime(f"{temp_leaving_time}:00", DATE_TIME_FORMAT)
+                    leaving_time = temp_leaving_time
+                except ValueError:
+                    print(YELLOW + f"Invalid or not input leaving time, use current datetime: {leaving_time.strftime(DATE_TIME_NEEDED_FORMAT)}" + RESET)
+                
                 payment_fee = __calculate_payment_fee(parked_car, leaving_time)
                 if payment_fee is None:
                     continue

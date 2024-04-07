@@ -3,6 +3,7 @@ from handle_options import handle_parking, handle_pickup, handle_history
         
 while True:
     try:
+        print("========WELCOME YOU TO OUR CAR PARKING SERVICE========")
         option = int(input("Please select an option: \n\
                     1: Park \n\
                     2: Pickup \n\
