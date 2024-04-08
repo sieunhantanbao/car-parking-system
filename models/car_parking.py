@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import Optional
 import re
-from models.constants import DATE_TIME_FORMAT
+from ultils.constants import DATE_TIME_FORMAT
 from ultils.ultils import calculate_modulo11_check_digit
 
 class CarParking():
