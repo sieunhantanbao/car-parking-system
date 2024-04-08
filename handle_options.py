@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 from decimal import Decimal
+import math
 from models.constants import DATE_TIME_FORMAT, DATE_TIME_NEEDED_FORMAT
 from objects.car_parking import CarParking
 from objects.parking_history import ParkingHistory
@@ -225,8 +226,8 @@ def __calculate_hours_between(arrival_time, leaving_time):
             end_time = min(end_time, leaving_time)
             
             # Calculate the duration in hours for the current period
-            # Round the fractional hours to the nearest whole number by + 0.5 and convert it to int
-            hours = int(max(0, (end_time - start_time).total_seconds() / 3600) + 0.5)
+            # Round up 1 hour if it passed from 1 minute, i.e 2h01m => 3h
+            hours = math.ceil(max(0, (end_time - start_time).total_seconds() / 3600))
             day_hours[period_name] = hours
 
         # Add the calculated hours for the day to the result list
