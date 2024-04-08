@@ -1,9 +1,9 @@
 from datetime import datetime
 import sqlite3
-from models.constants import DATE_TIME_FORMAT
-from objects.car_parking import CarParking
-from objects.parking_history import ParkingHistory
-from objects.payment_balance import PaymentBalance
+from ultils.constants import DATE_TIME_FORMAT
+from models.car_parking import CarParking
+from models.parking_history import ParkingHistory
+from models.payment_balance import PaymentBalance
 conn = sqlite3.connect("database/my_database.db")
 
 def get_car_parking(car_identity) -> CarParking:
