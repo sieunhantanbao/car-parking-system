@@ -35,8 +35,6 @@ class CarParking():
         if not at:
             self.errors.append('Arrival time cannot be empty')
         try:
-            # Add 00 second to the arrival time for validation purpose
-            # at = f"{at}:00"
             date_obj = datetime.strptime(str(at), DATE_TIME_FORMAT)
             if date_obj > datetime.now():
                 self.errors.append("Arrival time can't be greater than current datetime")
@@ -86,7 +84,7 @@ class CarParking():
     def frequent_parking_number(self, fpn):
         self.is_valid_fpn = False
         self._frequent_parking_number = fpn
-        if not fpn:
+        if not fpn or fpn == 'None':
             return
         if not self.validate_frequent_parking_number(fpn):
             self.errors.append('Invalid frequent parking number')
