@@ -256,8 +256,8 @@ def __input_and_validate_payment_amount(payment_fee: Decimal, available_credit: 
 def __show_payment_history_to_console(car_identity, payment_balance, parking_histories) -> None:
     total_payment = sum([parking_history.parking_fee for parking_history in parking_histories])
     print(f"**************************PARKING HISTORY - {car_identity}*****************************")
-    print(f"   Total payment: ${total_payment}")
-    print(f"   Available credits: ${payment_balance.available_credit if payment_balance else '0'}")
+    print(f"   Total payment: ${round(total_payment, 2)}")
+    print(f"   Available credits: ${round(payment_balance.available_credit, 2) if payment_balance else '0'}")
     print("   Parked Dates:")
     for parking_history in parking_histories:
         print(f"        {parking_history.arrival_time.strftime(DATE_TIME_NEEDED_FORMAT)} - {parking_history.leaving_time.strftime(DATE_TIME_NEEDED_FORMAT)} ${parking_history.parking_fee}")
@@ -267,8 +267,8 @@ def __show_payment_history_to_console(car_identity, payment_balance, parking_his
 def __write_payment_history_to_file(car_identity, payment_balance, parking_histories) -> None:
     total_payment = sum([parking_history.parking_fee for parking_history in parking_histories])
     with open(f"exports/{car_identity}.txt", "w", encoding="utf-8") as file:
-        file.write(f"Total payment: ${total_payment}\n")
-        file.write(f"Available credits: ${payment_balance.available_credit if payment_balance else '0'}\n")
+        file.write(f"Total payment: ${round(total_payment, 2)}\n")
+        file.write(f"Available credits: ${round(payment_balance.available_credit, 2) if payment_balance else '0'}\n")
         file.write("Parked Dates:\n")
         for parking_history in parking_histories:
             file.write(f"\t{parking_history.arrival_time.strftime(DATE_TIME_NEEDED_FORMAT)} - {parking_history.leaving_time.strftime(DATE_TIME_NEEDED_FORMAT)} ${parking_history.parking_fee}\n")
